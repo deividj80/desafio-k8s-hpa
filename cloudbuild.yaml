@@ -10,7 +10,7 @@ steps:
     
   - id: "Send image Google Container Registry"
     name: 'gcr.io/cloud-builders/docker'
-    args: ['build','-t','gcr.io/$PROJECT_ID/go-hpa:latest','.']
+    args: ['build','-t','gcr.io/$PROJECT_ID/go-hpa:latest','./docker/.']
 
 images:
   - 'gcr.io/$PROJECT_ID/go-hpa:latest'
