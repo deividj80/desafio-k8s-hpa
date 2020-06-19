@@ -1,12 +1,14 @@
-FROM golang:1.13.12-alpine3.12
+FROM golang:1.6.1-alpine
 
-RUN apk update && apk add bash
+ENV APP_NAME main
+ENV PORT 8080
 
-WORKDIR /go/src/main
+COPY ./src/main/ /go/src/${APP_NAME}
+WORKDIR /go/src/${APP_NAME}
 
-COPY ./src/main/ .
+RUN go get ./
+RUN go build -o ${APP_NAME}
 
-RUN go get -d -v ./...
-RUN go install -v ./...
+CMD ./${APP_NAME}
 
-ENTRYPOINT [ "/go/bin/main" ]
+EXPOSE ${PORT}
