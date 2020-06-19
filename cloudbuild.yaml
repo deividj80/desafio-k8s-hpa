@@ -1,0 +1,16 @@
+steps:
+
+  - id: "Running docker-compose"
+    name: 'gcr.io/$PROJECT_ID/docker-compose:1.25.5'
+    args: ['-f','docker-compose.yaml','up','-d']
+
+  - id: "Running GO TEST"
+    name: 'gcr.io/$PROJECT_ID/docker-compose:1.25.5'
+    args: ['-f','docker-compose.yaml','run','calc','go','test','calculation.go','calculation_test.go','-v']
+    
+  - id: "Send image Google Container Registry"
+    name: 'gcr.io/cloud-builders/docker'
+    args: ['build','-t','gcr.io/$PROJECT_ID/go-hpa:latest','.']
+
+images:
+  - 'gcr.io/$PROJECT_ID/go-hpa:latest'
